@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class HomePage extends BasePage{
 
-    private static final String HOME_PAGE_URL = "https://www.google.";
+    private static final String HOME_PAGE_URL = "https://www.google.com";
 
     @FindBy(css = "#hplogo")
     private WebElement logo;
@@ -23,8 +23,8 @@ public class HomePage extends BasePage{
         PageFactory.initElements(driver, this);
     }
 
-    void goToHomePage(String country){
-        driver.get(HOME_PAGE_URL + country);
+    void goToHomePage(){
+        driver.get(HOME_PAGE_URL );
         wait.forLoading(5);
     }
 

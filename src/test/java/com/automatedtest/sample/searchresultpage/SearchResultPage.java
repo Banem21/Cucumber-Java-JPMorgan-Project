@@ -12,19 +12,41 @@ import java.util.stream.IntStream;
 
 public class SearchResultPage extends BasePage {
 
-    private static final String RESULTS_TITLE_SELECTOR = "a h3";
 
-    @FindBy(css = RESULTS_TITLE_SELECTOR)
+    @FindBy(xpath = "//h3[contains(text(),'J.P. Morgan')]")
     private List<WebElement> results;
 
-    SearchResultPage() {
+    @FindBy(xpath = "//img[@class='first-logo']")
+    private List<WebElement> jpMorganLogo;
+
+    public SearchResultPage() {
         PageFactory.initElements(driver, this);
     }
 
-    boolean isInResults(String expectedTitle, int nbOfResultsToSearch) {
-        wait.forPresenceOfElements(5, By.cssSelector(RESULTS_TITLE_SELECTOR), "Result title");
-        return IntStream.range(0, Math.min(this.results.size(), nbOfResultsToSearch))
-                .anyMatch(index -> this.results.get(index).getText().contains(expectedTitle));
+    public String validateLinkOnLandingPage()
+    {
+        wait.forLoading(5);
+        String link = results.get(0).getText();
+        return link;
+    }
+
+    /**
+     * This method clicks on the first JPMorgan Link
+     */
+    public void clickOnLink(int index)
+    {
+        results.get(index).click();
+    }
+
+    public String getJPMorganURL()
+    {
+        return driver.getCurrentUrl();
+    }
+
+    public boolean isLogoDisplayed()
+    {
+        wait.forLoading(5);
+        return jpMorganLogo.get(1).isDisplayed();
     }
 }
 
